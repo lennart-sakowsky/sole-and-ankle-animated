@@ -1,13 +1,13 @@
-import React from 'react';
-import styled from 'styled-components/macro';
+import React from "react";
+import styled from "styled-components/macro";
 
-import { QUERIES, WEIGHTS } from '../../constants';
-import Logo from '../Logo';
-import Icon from '../Icon';
-import UnstyledButton from '../UnstyledButton';
-import SuperHeader from '../SuperHeader';
-import MobileMenu from '../MobileMenu';
-import VisuallyHidden from '../VisuallyHidden';
+import { QUERIES, WEIGHTS } from "../../constants";
+import Logo from "../Logo";
+import Icon from "../Icon";
+import UnstyledButton from "../UnstyledButton";
+import SuperHeader from "../SuperHeader";
+import MobileMenu from "../MobileMenu";
+import VisuallyHidden from "../VisuallyHidden";
 
 const Header = () => {
   const [showMobileMenu, setShowMobileMenu] = React.useState(false);
@@ -20,12 +20,30 @@ const Header = () => {
           <Logo />
         </LogoWrapper>
         <DesktopNav>
-          <NavLink href="/sale">Sale</NavLink>
-          <NavLink href="/new">New&nbsp;Releases</NavLink>
-          <NavLink href="/men">Men</NavLink>
-          <NavLink href="/women">Women</NavLink>
-          <NavLink href="/kids">Kids</NavLink>
-          <NavLink href="/collections">Collections</NavLink>
+          <NavLink href="/sale">
+            <LinkText>Sale</LinkText>
+            <LinkTextBold>Sale</LinkTextBold>
+          </NavLink>
+          <NavLink href="/new">
+            <LinkText>New&nbsp;Releases</LinkText>
+            <LinkTextBold>New&nbsp;Releases</LinkTextBold>
+          </NavLink>
+          <NavLink href="/men">
+            <LinkText>Men</LinkText>
+            <LinkTextBold>Men</LinkTextBold>
+          </NavLink>
+          <NavLink href="/women">
+            <LinkText>Women</LinkText>
+            <LinkTextBold>Women</LinkTextBold>
+          </NavLink>
+          <NavLink href="/kids">
+            <LinkText>Kids</LinkText>
+            <LinkTextBold>Kids</LinkTextBold>
+          </NavLink>
+          <NavLink href="/collections">
+            <LinkText>Collections</LinkText>
+            <LinkTextBold>Collections</LinkTextBold>
+          </NavLink>
         </DesktopNav>
         <MobileActions>
           <ShoppingBagButton>
@@ -115,6 +133,7 @@ const Filler = styled.div`
 `;
 
 const NavLink = styled.a`
+  position: relative;
   font-size: 1.125rem;
   text-transform: uppercase;
   text-decoration: none;
@@ -123,6 +142,61 @@ const NavLink = styled.a`
 
   &:first-of-type {
     color: var(--color-secondary);
+  }
+
+  &::after {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--color-gray-900);
+    content: "";
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.2s, transform 0.2s;
+  }
+
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    &:hover,
+    &:focus {
+      &::after {
+        opacity: 1;
+        transform: translateY(0px);
+      }
+    }
+  }
+`;
+
+const LinkText = styled.span`
+  display: inline-block;
+  will-change: transform;
+  transform: rotateX(0deg) translateY(0);
+  transition: transform 200ms;
+  transform-origin: 50% 0;
+  transform-style: preserve-3d;
+
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    ${NavLink}:hover &,
+    ${NavLink}:focus & {
+      transform: rotateX(-90deg) translateY(-27px);
+      transition: transform 200ms;
+    }
+  }
+`;
+
+const LinkTextBold = styled(LinkText)`
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-weight: ${WEIGHTS.bold};
+  transform: rotateX(90deg) translateY(27px);
+
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    ${NavLink}:hover &,
+    ${NavLink}:focus & {
+      transform: rotateX(0deg) translateY(0);
+    }
   }
 `;
 
