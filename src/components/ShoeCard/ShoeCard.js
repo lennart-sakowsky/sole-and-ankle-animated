@@ -36,26 +36,30 @@ const ShoeCard = ({
       <Wrapper>
         <ImageWrapper>
           <Image alt="" src={imageSrc} />
-          {variant === "on-sale" && <SaleFlag>Sale</SaleFlag>}
-          {variant === "new-release" && <NewFlag>Just released!</NewFlag>}
         </ImageWrapper>
+        {variant === 'on-sale' && <SaleFlag>Sale</SaleFlag>}
+        {variant === 'new-release' && (
+          <NewFlag>Just released!</NewFlag>
+        )}
         <Spacer size={12} />
         <Row>
           <Name>{name}</Name>
           <Price
             style={{
-              "--color":
-                variant === "on-sale" ? "var(--color-gray-700)" : undefined,
-              "--text-decoration":
-                variant === "on-sale" ? "line-through" : undefined,
+              '--color':
+                variant === 'on-sale'
+                  ? 'var(--color-gray-700)'
+                  : undefined,
+              '--text-decoration':
+                variant === 'on-sale' ? 'line-through' : undefined,
             }}
           >
             {formatPrice(price)}
           </Price>
         </Row>
         <Row>
-          <ColorInfo>{pluralize("Color", numOfColors)}</ColorInfo>
-          {variant === "on-sale" ? (
+          <ColorInfo>{pluralize('Color', numOfColors)}</ColorInfo>
+          {variant === 'on-sale' ? (
             <SalePrice>{formatPrice(salePrice)}</SalePrice>
           ) : undefined}
         </Row>
@@ -79,20 +83,25 @@ const Wrapper = styled.article`
 
 const ImageWrapper = styled.div`
   border-radius: 16px 16px 4px 4px;
+  /*
+    Image zooms in on hover/focus,
+    truncate the spillover
+  */
   overflow: hidden;
 `;
 
 const Image = styled.img`
-  display: inline-block;
+  display: block;
   width: 100%;
-  transition: transform 500ms;
-  transform-origin: 50% 60%;
+  transform-origin: 50% 75%;
+  transition: transform 600ms;
+  will-change: transform;
 
   @media (hover: hover) and (prefers-reduced-motion: no-preference) {
     ${Link}:hover &,
     ${Link}:focus & {
-      transition: transform 150ms;
       transform: scale(1.1);
+      transition: transform 200ms;
     }
   }
 `;
